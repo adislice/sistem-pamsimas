@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penggunaan', function (Blueprint $table) {
+        Schema::create('tagihan', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pelanggan_id');
             $table->integer('bulan');
             $table->integer('tahun');
-            $table->integer('mt_awal');
-            $table->integer('mt_akhir');
-            $table->integer('pemakaian');
+            $table->integer('penggunaan_air');
             $table->decimal('harga_permeter', 10, 2);
             $table->decimal('tagihan', 10, 2);
             $table->date('tgl_batas_bayar');
@@ -26,6 +24,7 @@ return new class extends Migration
             $table->foreign('tarif_id')->references('id')->on('tarif')->onUpdate('cascade')->onDelete('restrict');
             $table->foreign('pelanggan_id')->references('id')->on('pelanggan')->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();
+            $table->unique(['pelanggan_id', 'bulan', 'tahun']);
         });
     }
 
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penggunaan');
+        Schema::dropIfExists('tagihan');
     }
 };

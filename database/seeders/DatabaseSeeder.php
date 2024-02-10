@@ -3,7 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Pelanggan;
+use App\Models\Petugas;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Testing\Fakes\Fake;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +24,25 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        for ($i = 0; $i < 20; $i++) {
+            Pelanggan::create([
+                'nama' => fake()->name,
+                'no_pelanggan' => 'P' . fake()->unique()->numerify('##########'),
+                'no_telepon' => fake()->unique()->phoneNumber(),
+                'rt' => fake()->numerify('##'),
+                'rw' => fake()->numerify('##'),
+                'is_aktif' => fake()->boolean,
+                'password' => Hash::make('password'),
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+            
+            ]);
+        }
+
+        Petugas::create([
+            'nama' => fake()->name,
+            'username' => 'admin',
+            'password' => Hash::make('admin')
+        ]);
     }
 }

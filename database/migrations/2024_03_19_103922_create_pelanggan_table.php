@@ -14,16 +14,13 @@ return new class extends Migration
         Schema::create('pelanggan', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('no_pelanggan');
+            $table->string('no_pelanggan')->unique();
             $table->string('no_telepon')->unique();
             $table->string('rt');
             $table->string('rw');
             $table->boolean('is_aktif');
-            $table->foreignId('jenis_tarif');
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->foreign('jenis_tarif')->references('id')->on('tarif')->onUpdate('cascade')->onDelete('restrict');
             $table->softDeletes();
             $table->timestamps();
         });

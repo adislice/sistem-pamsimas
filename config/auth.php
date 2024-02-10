@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'petugas' => [
+            'driver' => 'session',
+            'provider' => 'petugas_provider'
+        ]
     ],
 
     /*
@@ -64,6 +68,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'petugas_provider' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Petugas::class
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
