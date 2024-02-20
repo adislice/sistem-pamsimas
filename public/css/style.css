@@ -1,0 +1,71 @@
+:root {
+    --bs-body-color: #576472;
+    --bs-primary: #0d6efd;
+    --bs-primary-rgb: 13, 110, 253;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 3px 0.01rem rgba(var(--bs-primary-rgb), 0.3);
+}
+
+.btn {
+    transition: all 0.3s ease-in-out;
+}
+.btn-primary:hover {
+    box-shadow: 0 0.125rem 0.5rem 0 rgba(var(--bs-primary-rgb), 0.3);
+}
+
+.menu-link {
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+}
+.menu-link.active:hover {
+    box-shadow: 0 0.15rem 0.6rem 0 rgba(var(--bs-primary-rgb), 0.3);
+}
+.menu-link.active {
+    color: white;
+    box-shadow: 0 0.125rem 0.3rem 0 rgba(var(--bs-primary-rgb), 0.3);
+    background-color: var(--bs-primary);
+}
+
+.menu-link:not(.active):hover {
+    background: rgba(var(--bs-primary-rgb), 0.1);
+}
+.menu-item {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+.menu-sub {
+    height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all .4s;
+  pointer-events: none;
+}
+.menu-sub.open {
+    opacity: 1;
+  pointer-events: auto;
+  margin-top: 0.25rem;
+}
+
+.menu-sub-toggle::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 0.42em;
+    height: 0.42em;
+    border: 1px solid;
+    border-bottom: 0;
+    border-left: 0;
+    transform: translateY(-50%) rotate(45deg);
+    right: 1rem;
+    transition: all .4s;
+}
+
+.menu-sub-toggle.expanded::after{
+    transform: translateY(-50%) rotate(135deg);
+}
