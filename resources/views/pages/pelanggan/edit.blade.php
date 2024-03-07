@@ -12,9 +12,8 @@
         <div class="w-1/2 px-1">
           <label class="mb-3 block">
             <span class="font-medium">Nama</span>
-            <input type="text" name="nama"
-              class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder="Masukkan nama" value="{{ old('nama', $pelanggan->nama) }}" required>
+            <x-input-text type="text" name="nama" placeholder="Masukkan nama" value="{{ old('nama', $pelanggan->nama) }}" required/>
+            
             @error('nama')
               <small class="text-red-500">{{ $message }}</small>
             @enderror
@@ -22,9 +21,8 @@
 
           <label class="mb-3 block">
             <span class="font-medium">No. Telepon/HP/WA</span>
-            <input type="number" name="no_telepon" min="0"
-              class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder="Masukkan nomor telepon" required value="{{ old('no_telepon', $pelanggan->no_telepon) }}">
+            <x-input-text type="number" name="no_telepon" min="0"
+              placeholder="Masukkan nomor telepon" required value="{{ old('no_telepon', $pelanggan->no_telepon) }}"/>
             @error('no_telepon')
               <small class="text-red-500">{{ $message }}</small>
             @enderror
@@ -32,9 +30,8 @@
 
           <label class="mb-3 block">
             <span class="font-medium">RT</span>
-            <input type="number" name="rt" min="0"
-              class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder="Masukkan rt" required value="{{ old('rt', $pelanggan->rt) }}">
+            <x-input-text type="number" name="rt" min="0"
+              placeholder="Masukkan rt" required value="{{ old('rt', $pelanggan->rt) }}"/>
             @error('rt')
               <small class="text-red-500">{{ $message }}</small>
             @enderror
@@ -42,9 +39,8 @@
 
           <label class="mb-3 block">
             <span class="font-medium">RW</span>
-            <input type="number" name="rw" min="0"
-              class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder="Masukkan rw" required value="{{ old('rw', $pelanggan->rw) }}">
+            <x-input-text type="number" name="rw" min="0"
+              placeholder="Masukkan rw" required value="{{ old('rw', $pelanggan->rw) }}"/>
             @error('rw')
               <small class="text-red-500">{{ $message }}</small>
             @enderror
@@ -53,8 +49,8 @@
           <label class="mb-3 block">
             <span class="font-medium">Status</span>
             <select name="is_aktif" class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-              <option value="1" {{ old('is_aktif') == 1 ? "selected" : "" }}>Aktif</option>
-              <option value="0" {{ old('is_aktif') == 0 ? "selected" : "" }}>Nonaktif</option>
+              <option value="1" {{ old('is_aktif', $pelanggan->is_aktif) == 1 ? "selected" : "" }}>Aktif</option>
+              <option value="0" {{ old('is_aktif', $pelanggan->is_aktif) == 0 ? "selected" : "" }}>Nonaktif</option>
             </select>
             @error('is_aktif')
               <small class="text-red-500">{{ $message }}</small>

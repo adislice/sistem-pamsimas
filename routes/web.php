@@ -36,7 +36,7 @@ Route::middleware('auth:petugas')->group(function() {
     Route::get('pencatatan-meteran/mass-assigment', [PencatatanMeteranController::class, 'massAssigment'])->name('pencatatan_meteran.mass_assigment');
     Route::get('pencatatan-meteran/catat/{pelanggan}', [PencatatanMeteranController::class, 'catat'])->name('pencatatan_meteran.catat');
     Route::post('pencatatan-meteran/catat/{pelanggan}', [PencatatanMeteranController::class, 'catatAction'])->name('pencatatan_meteran.catat_action');
-    Route::get('pencatatan-meteran/{id_pelanggan}', [PencatatanMeteranController::class, 'show'])->name('pencatatan_meteran.show');
+    Route::get('pencatatan-meteran/{id}', [PencatatanMeteranController::class, 'show'])->name('pencatatan_meteran.show');
     
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');

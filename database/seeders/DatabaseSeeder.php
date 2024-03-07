@@ -24,13 +24,13 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             Pelanggan::create([
                 'nama' => fake()->name,
-                'no_pelanggan' => 'P' . fake()->unique()->numerify('##########'),
-                'no_telepon' => fake()->unique()->phoneNumber(),
-                'rt' => fake()->numerify('##'),
-                'rw' => fake()->numerify('##'),
+                'no_pelanggan' => fake()->unique()->numerify('##########'),
+                'no_telepon' => fake()->unique()->numerify('08##########'),
+                'rt' => fake()->randomElement([1, 2]),
+                'rw' => fake()->randomElement([1,2]),
                 'is_aktif' => fake()->boolean,
                 'password' => Hash::make('password'),
                 'remember_token' => Str::random(10),

@@ -11,11 +11,13 @@ class PencatatanMeteran extends Model
     protected $table = "pencatatan_meteran";
     protected $guarded = ['id'];
 
-    public function pelanggan() {
+    public function pelanggan()
+    {
         return $this->belongsTo(Pelanggan::class);
     }
 
-    public function petugas() {
+    public function petugas()
+    {
         return $this->belongsTo(Petugas::class);
     }
 }

@@ -12,12 +12,17 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   @vite('resources/css/app.css')
+  <style>
+    [x-cloak] {
+      display: none !important;
+    }
+  </style>
 </head>
 
-<body class="flex min-h-screen flex-col">
+<body class="flex min-h-screen flex-col" x-data="{ rightSidebar: false}">
 
   <div class="border-b shadow-sm relative p-2">
-    <x-button href="{{ route('pencatatan_meteran.index') }}"
+    <x-button href="{!! route('pencatatan_meteran.index') . '?' . request()->getQueryString() !!}"
       class="!p-0 bg-transparent hover:bg-black/10 absolute top-1/2 -translate-y-1/2 left-2 text-primary-700 size-10 rounded">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
         stroke="currentColor" class="size-6">
@@ -27,12 +32,23 @@
     <h1 class="text-xl font-bold text-center">Catat Meteran</h1>
     <p class="text-sm text-gray-600 text-center">Bulan : {{ request()->get('bulan') }} / Tahun :
       {{ request()->get('tahun') }}</p>
+      <button @click="rightSidebar = true"
+        class="right-2 absolute top-1/2 -translate-y-1/2 hover:bg-gray-200 h-10 px-3 gap-2 flex items-center justify-center rounded" >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          >
+          <path d="M18 21a8 8 0 0 0-16 0" />
+          <circle cx="10" cy="8" r="5" />
+          <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
+        </svg>
+        <span class="hidden lg:block">Daftar Pelanggan</span>
+      </button>
   </div>
 
   <div class="mx-auto flex flex-col grow h-full w-full max-w-96 px-2">
     <div class="rounded p-2">
-      <p class="text-center text-gray-500">{{ $pelanggan->nama }}</p>
-      <p class="text-center text-gray-500">{{ $pelanggan->no_pelanggan }}</p>
+      <p class="text-center text-gray-600">{{ $pelanggan->nama }}</p>
+      <p class="text-center text-gray-600">{{ $pelanggan->no_pelanggan }}</p>
       @if ($is_sudah_dicatat)
           <div class="py-1 px-2 text-sm gap-1 border border-green-300 flex w-fit mx-auto bg-green-100 text-green-700 rounded">
             <svg class="size-5" viewBox="0 0 24 24" style="fill: currentColor;transform: ;msFilter:;"><path d="M19.965 8.521C19.988 8.347 20 8.173 20 8c0-2.379-2.143-4.288-4.521-3.965C14.786 2.802 13.466 2 12 2s-2.786.802-3.479 2.035C6.138 3.712 4 5.621 4 8c0 .173.012.347.035.521C2.802 9.215 2 10.535 2 12s.802 2.785 2.035 3.479A3.976 3.976 0 0 0 4 16c0 2.379 2.138 4.283 4.521 3.965C9.214 21.198 10.534 22 12 22s2.786-.802 3.479-2.035C17.857 20.283 20 18.379 20 16c0-.173-.012-.347-.035-.521C21.198 14.785 22 13.465 22 12s-.802-2.785-2.035-3.479zm-9.01 7.895-3.667-3.714 1.424-1.404 2.257 2.286 4.327-4.294 1.408 1.42-5.749 5.706z"></path></svg>
@@ -121,7 +137,28 @@
     </div>
   </div>
 
+  {{-- Right Sidebar - List Pelanggan --}}
+  <div class="fixed h-screen z-[99999] w-full flex flex-col md:w-96 bg-white right-0 shadow border transition-transform" x-cloak :class="{ 'translate-x-full' : !rightSidebar }" tabindex="-1">
+    <div><button @click="rightSidebar = false" class="size-10 hover:bg-gray-200">×</button></div>
+    <div class="grow overflow-y-auto p-4 flex flex-col gap-2">
+      @foreach ($list_pelanggan as $row)
+          <a href="{{ route('pencatatan_meteran.catat', $row->id) . '?' . request()->getQueryString() }}" class="p-2 shadow border rounded flex gap-2 items-center @if($pelanggan->id == $row->id) bg-blue-100 border-blue-500 @endif">
+            <span>{{ $loop->iteration }}.</span>
+            <div class="grow">{{ $row->nama }} </div>
+            @if ($row->created_at)
+            <svg class="size-5 text-green-700" viewBox="0 0 24 24" style="fill: currentColor;transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path></svg>
+            @else 
+            <svg class="size-5" viewBox="0 0 24 24" style="fill: currentColor;transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12c.001 5.515 4.487 10.001 10 10.001 5.514 0 10-4.486 10.001-10.001 0-5.514-4.486-10-10.001-10zm0 18.001c-4.41 0-7.999-3.589-8-8.001 0-4.411 3.589-8 8-8 4.412 0 8.001 3.589 8.001 8-.001 4.412-3.59 8.001-8.001 8.001z"></path></svg>    
+            @endif
+            
+            
+            </a>
+      @endforeach
+    </div>
+  </div>
+
   @vite('resources/js/app.js')
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/cdn.min.js"></script>
 
   <script>
     const video = document.getElementById('video')
@@ -131,15 +168,35 @@
     const capturedImageInput = document.getElementById('capturedImage')
     const thumbnail = document.getElementById('thumbnail');
     var previewing = false
+    const idealResolution = {
+      width: {ideal: 720}, 
+      height: {ideal: 1280},
+    }
+
     async function getCameraDevices() {
       const devices = await navigator.mediaDevices.enumerateDevices();
       const videoDevices = devices.filter(device => device.kind === 'videoinput');
-      videoDevices.forEach(device => {
+      console.log(devices.length)
+      for (let device of videoDevices) {
+        const stream = await navigator.mediaDevices.getUserMedia({video: { deviceId: device.deviceId, ...idealResolution }});
+        const track = stream.getVideoTracks()[0]
+        const settings = track.getSettings()
+
+        const resolution = `${settings.width}x${settings.height}`
+        track.stop()
+        stream.getVideoTracks().forEach(t => t.stop())
+
         const option = document.createElement('option');
         option.value = device.deviceId;
-        option.text = device.label || `Camera ${deviceSelector.length + 1}`;
+        const label = device.label || `Camera ${deviceSelector.length + 1}`
+        option.text = `${label} (${resolution})`;
         deviceSelector.appendChild(option);
-      });
+      }
+
+      const rearCamera = videoDevices.find(dev => dev.label.toLowerCase().includes('back') || dev.label.toLowerCase().includes('rear'))
+      if (rearCamera) {
+        return rearCamera
+      }
     }
 
     async function startCamera(deviceId) {
@@ -148,6 +205,7 @@
       }
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
+          ...idealResolution,
           deviceId: deviceId ? {
             exact: deviceId
           } : undefined
@@ -181,8 +239,11 @@
       startCamera(event.target.value);
     });
 
-    getCameraDevices().then(() => {
+    getCameraDevices().then((rearCamera) => {
       if (deviceSelector.options.length > 0) {
+        if (rearCamera) {
+          deviceSelector.value = rearCamera.deviceId
+        }
         startCamera(deviceSelector.value);
       }
     });

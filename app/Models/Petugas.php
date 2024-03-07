@@ -22,6 +22,4 @@ class Petugas extends Authenticatable
     protected $hidden = [
         'password',
     ];
-
-
 }

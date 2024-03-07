@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>{{ $title ?? 'Page Title' }}</title>
+  <title>Login | {{ $app_title }}</title>
   {{-- Our CSS --}}
   @vite('resources/css/app.css')
 
@@ -27,7 +27,7 @@
         </div>
 
         <div class="mb-3">
-          <x-input-text-icon name="password" type="text" placeholder="Password" label="Password" icon-start="key" />
+          <x-input-text-icon name="password" type="password" placeholder="Password" label="Password" icon-start="key" />
         </div>
 
         <x-button type="submit" class="w-full mt-4 rounded-lg">

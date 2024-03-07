@@ -63,7 +63,7 @@
               <td class="whitespace-nowrap">{{ $item->no_pelanggan }}</td>
               <td class="whitespace-nowrap">RT.{{ $item->rt }} / RW.{{ $item->rw }}</td>
               <td class="whitespace-nowrap">{{ $item->no_telepon }}</td>
-              <td class="whitespace-nowrap">
+              <td class="whitespace-nowrap text-sm">
                 @if ($item->is_aktif)
                   <span class="text-green-500">Aktif</span>
                 @else

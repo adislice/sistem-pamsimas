@@ -20,8 +20,7 @@ class AuthController extends Controller
             "password" => "required",
         ]);
 
-        if (Auth::guard("petugas")->attempt($request->only(["username", "password"]))
-        ) {
+        if (Auth::guard("petugas")->attempt($request->only(["username", "password"]))) {
             return redirect()->route("index")->with('toast-success', "<strong>Login Berhasil!</strong> Selamat datang " . auth('petugas')->user()->nama);
         } else {
             return redirect()

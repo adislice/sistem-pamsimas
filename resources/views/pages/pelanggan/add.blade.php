@@ -5,7 +5,7 @@
   <h4 class="mb-4 text-gray-500">Silahkan lengkapi formulir berikut untuk menambah pelanggan baru</h4>
   <div class="bg-white rounded-lg shadow-sm p-5">
 
-    <form action="{{ route('pelanggan.create') }}" method="post" class="flex flex-col">
+    <form action="{{ route('pelanggan.store') }}" method="post" class="flex flex-col">
       @csrf
       <div class="flex justify-center w-full">
         <div class="md:w-1/2 w-full px-1">

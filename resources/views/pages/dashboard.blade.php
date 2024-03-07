@@ -1,10 +1,10 @@
-@extends('template.dashboard_layout')
+@extends('template.dashboard_layout', ['title' => 'Dashboard | ' . $app_title])
 
 @section('content')
 <h4 class="mb-4 font-bold text-2xl text-gray-700">Dashboard</h4>
 <div class="flex flex-col gap-4">
   <div class="bg-white rounded-lg p-6">
-    <div class="grid grid-cols-4 gap-2">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
       <div class="rounded-lg h-32 bg-green-100 p-4 flex flex-col">
         <h6 class="uppercase text-sm">Pelanggan</h6>
         <div class="grow flex items-center">
@@ -65,7 +65,7 @@
 
   </div>
 
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
     <div class="bg-white rounded-lg">
       <div class="flex items-center px-4 py-3 border-b border-gray-300 ">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
