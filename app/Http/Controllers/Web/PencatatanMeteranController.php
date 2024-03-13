@@ -15,7 +15,6 @@ class PencatatanMeteranController extends Controller
 {
     public function index(Request $request)
     {
-        $data = PencatatanMeteran::with(['pelanggan', 'petugas'])->latest()->get();
         $rt = $request->rt;
         $rw = $request->rw;
         $month = $request->bulan;
@@ -43,8 +42,7 @@ class PencatatanMeteranController extends Controller
         return view('pages.pencatatan_meteran.index', [
             'select_rt' => $select_rt,
             'select_rw' => $select_rw,
-            'list_pelanggan' => $list_pelanggan,
-            'data' => []
+            'list_pelanggan' => $list_pelanggan
         ]);
     }
 

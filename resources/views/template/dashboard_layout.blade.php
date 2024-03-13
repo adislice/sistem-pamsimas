@@ -98,6 +98,23 @@
     </script>
     @endif
 
+    @if (session()->has('toast-error'))
+    <script type="module">
+      Toastify({
+        text: "{!! session()->get('toast-error') !!}",
+        duration: 10000,
+        escapeMarkup: false,
+        newWindow: true,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        className: 'toast-error',
+        onClick: function(){} // Callback after click
+      }).showToast();
+    </script>
+    @endif
+
 </body>
 
 </html>

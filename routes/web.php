@@ -3,7 +3,9 @@
 use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\PelangganController;
+use App\Http\Controllers\Web\PemakaianAirController;
 use App\Http\Controllers\Web\PencatatanMeteranController;
+use App\Http\Controllers\Web\TagihanPembayaranController;
 use App\Models\Pelanggan;
 use Illuminate\Support\Facades\Route;
 
@@ -33,11 +35,14 @@ Route::middleware('auth:petugas')->group(function() {
     Route::resource('pelanggan', PelangganController::class);
 
     Route::get('pencatatan-meteran', [PencatatanMeteranController::class, 'index'])->name('pencatatan_meteran.index');
-    Route::get('pencatatan-meteran/mass-assigment', [PencatatanMeteranController::class, 'massAssigment'])->name('pencatatan_meteran.mass_assigment');
     Route::get('pencatatan-meteran/catat/{pelanggan}', [PencatatanMeteranController::class, 'catat'])->name('pencatatan_meteran.catat');
     Route::post('pencatatan-meteran/catat/{pelanggan}', [PencatatanMeteranController::class, 'catatAction'])->name('pencatatan_meteran.catat_action');
     Route::get('pencatatan-meteran/{id}', [PencatatanMeteranController::class, 'show'])->name('pencatatan_meteran.show');
-    
+    Route::get('pemakaian-air', [PemakaianAirController::class, 'index'])->name('pemakaian_air.index');
+    Route::post('terbitkan-tagihan', [TagihanPembayaranController::class, 'createAll'])->name('tagihan.terbitkan');
+    Route::get('tagihan', [TagihanPembayaranController::class, 'index'])->name('tagihan.index');
+    Route::get('tagihan/create/{id_meteran}', [TagihanPembayaranController::class, 'create'])->name('tagihan.create');
+    Route::post('tagihan/konfirmasi', [TagihanPembayaranController::class, 'confirmPayment'])->name('tagihan.konfirmasi');
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     

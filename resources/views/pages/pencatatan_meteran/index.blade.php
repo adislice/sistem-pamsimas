@@ -10,6 +10,8 @@
           class="bg-gray-50 border border-gray-300 border-r-0 px-3 rounded-s flex items-center font-medium">Bulan</label>
         <x-input-select id="bulan" placeholder="123" class="rounded-e rounded-s-none border-s-0" name="bulan">
           <option value="1">Januari</option>
+          <option value="2">Februari</option>
+          <option value="3">Maret</option>
         </x-input-select>
       </div>
       <div class="flex w-full lg:w-72">
@@ -95,19 +97,19 @@
                       target="_blank"
                       class="ms-1 inline-flex items-center bg-green-500 rounded px-2 py-1 text-sm text-white">
                       <x-feathericon-edit class="h-4 w-4 me-1" />Catat</a>
-                  
+
                     @if ($row->pencatatan_id)
-                    <a href="{{ route('pencatatan_meteran.show', $row->pencatatan_id ?? 0) }}"
-                      class="inline-flex items-center rounded hover:underline font-medium text-sm p-2 gap-1 bg-blue-500 text-white"
-                      title="Lihat">
-                      <x-feathericon-eye class="h-4 w-4" />
-                    </a>
-                    @else 
-                    <button
-                      class="inline-flex items-center rounded hover:underline font-medium text-sm p-2 gap-1 bg-gray-300 text-gray-400"
-                      title="Lihat" disabled>
-                      <x-feathericon-eye class="h-4 w-4" />
-                    </button>
+                      <a href="{{ route('pencatatan_meteran.show', $row->pencatatan_id ?? 0) }}"
+                        class="inline-flex items-center rounded hover:underline font-medium text-sm p-2 gap-1 bg-blue-500 text-white"
+                        title="Lihat">
+                        <x-feathericon-eye class="h-4 w-4" />
+                      </a>
+                    @else
+                      <button
+                        class="inline-flex items-center rounded hover:underline font-medium text-sm p-2 gap-1 bg-gray-300 text-gray-400"
+                        title="Lihat" disabled>
+                        <x-feathericon-eye class="h-4 w-4" />
+                      </button>
                     @endif
 
                   </div>

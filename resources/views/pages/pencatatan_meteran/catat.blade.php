@@ -98,7 +98,7 @@
     <x-button id="capture" class="rounded mt-1 bg-green-600 hover:bg-green-800 w-fit mx-auto">Ambil Gambar</x-button>
 
     <div class="w-full max-w-96 mx-auto py-4">
-      <form action="{{ route('pencatatan_meteran.catat_action', $pelanggan->id) }}" method="post"
+      <form action="{{ route('pencatatan_meteran.catat_action', $pelanggan->id) }}" method="post" onchange="window.onbeforeunload = () => '';"
         @if($is_sudah_dicatat)
         onSubmit="return confirm('Meteran pelanggan {{ $pelanggan->no_pelanggan}} sudah dicatat sebelumnya. Apakah Anda yakin ingin memperbarui data meteran?') "
         @endif
@@ -231,6 +231,7 @@
         thumbnail.style.display = 'block'
         captureBtn.innerText = 'Ambil ulang'
         previewing = true
+        window.onbeforeunload = () => '';
       }
 
     });

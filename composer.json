@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "akaunting/laravel-money": "^5.2",
         "blade-ui-kit/blade-icons": "^1.6",
         "brunocfalcao/blade-feather-icons": "^4.0",
         "gehrisandro/tailwind-merge-laravel": "^1.2",
@@ -15,6 +16,7 @@
         "laravel/tinker": "^2.8"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
