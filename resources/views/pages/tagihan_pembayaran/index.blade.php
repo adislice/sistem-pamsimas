@@ -1,14 +1,17 @@
+@php
+  use Akaunting\Money\Money;
+@endphp
 @extends('template.dashboard_layout', ['title' => 'Tagihan Pembayaran'])
 
 @section('content')
   <div x-data="{ modalBayar: false, modalBayarItem: {} }">
     <h4 class="mb-4 font-bold text-2xl text-gray-700">Tagihan Pembayaran</h4>
-    <div class="bg-white rounded-lg shadow-sm p-5">
+    <div class="bg-white rounded-lg shadow-sm p-4">
 
       <form action="" method="get" class="mx-auto flex gap-2 flex-wrap md:flex-nowrap">
         <div class="flex w-full lg:w-72">
           <label for="bulan"
-            class="bg-gray-50 border border-gray-300 border-r-0 px-3 rounded-s flex items-center font-medium">Bulan</label>
+            class="bg-gray-50 text-sm border border-gray-300 border-r-0 px-3 rounded-s flex items-center font-medium">Bulan</label>
           <x-input-select id="bulan" placeholder="123" class="rounded-e rounded-s-none border-s-0" name="bulan">
             <option value="1" {{ request('bulan') == 1 ? 'selected' : '' }}>Januari</option>
             <option value="2" {{ request('bulan') == 2 ? 'selected' : '' }}>Februari</option>
@@ -26,7 +29,7 @@
         </div>
         <div class="flex w-full lg:w-72">
           <label for="tahun"
-            class="bg-gray-50 border border-gray-300 border-r-0 px-3 rounded-s flex items-center font-medium">Tahun</label>
+            class="bg-gray-50 text-sm border border-gray-300 border-r-0 px-3 rounded-s flex items-center font-medium">Tahun</label>
           <x-input-select id="tahun" placeholder="123" class="rounded-e rounded-s-none border-s-0" name="tahun">
             <option value="2023" {{ request('tahun') == '2023' ? 'selected' : '' }}>2023</option>
             <option value="2024" {{ request('tahun') == '2024' ? 'selected' : '' }}>2024</option>
@@ -35,7 +38,7 @@
         </div>
         <div class="flex w-full lg:w-72">
           <label for="rt"
-            class="bg-gray-50 border border-gray-300 border-r-0 px-3 rounded-s flex items-center font-medium">RT</label>
+            class="bg-gray-50 text-sm border border-gray-300 border-r-0 px-3 rounded-s flex items-center font-medium">RT</label>
           <x-input-select id="rt" placeholder="123" class="rounded-e rounded-s-none border-s-0" name="rt">
             @foreach ($select_rt as $item)
               <option value="{{ $item->rt }}" {{ request('rt') == $item->rt ? 'selected' : '' }}>
@@ -46,7 +49,7 @@
         </div>
         <div class="flex w-full lg:w-72">
           <label for="rw"
-            class="bg-gray-50 border border-gray-300 border-r-0 px-3 rounded-s flex items-center font-medium">RW</label>
+            class="bg-gray-50 text-sm border border-gray-300 border-r-0 px-3 rounded-s flex items-center font-medium">RW</label>
           <x-input-select id="rw" placeholder="123" class="rounded-e rounded-s-none border-s-0" name="rw">
             @foreach ($select_rw as $item)
               <option value="{{ $item->rw }}" {{ request('rw') == $item->rw ? 'selected' : '' }}>
@@ -62,7 +65,7 @@
       </form>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm p-5 mt-2">
+    <div class="bg-white rounded-lg shadow-sm py-4 mt-2">
       <div class="hidden flex mb-4 gap-1 items-center">
         <div class=" gap-1 items-center ms-auto">
           <x-outlined-button size="sm" square="true" class="border-blue-600 text-blue-600 hover:bg-blue-600">
@@ -79,8 +82,15 @@
           </x-outlined-button>
         </div>
       </div>
+      
+      
 
       @if (isset($tagihan))
+      <div class="mx-4 mb-4">
+        <x-button href="{!! route('tagihan.cetak_kwitansi') . '?' . request()->getQueryString()  !!}" target="_blank" class="rounded bg-blue-500 hover:bg-hover gap-1" >
+          <x-feathericon-printer class="size-4" />
+          Cetak Kwitansi (Semua)</x-button>
+      </div>
         <div class="relative overflow-x-auto">
           <table class="table">
             <thead>
@@ -103,7 +113,7 @@
                   <td class="whitespace-nowrap text-ellipsis overflow-hidden max-w-48">{{ $row->pelanggan->nama }}</td>
                   <td class="whitespace-nowrap">{{ $row->pelanggan->no_pelanggan }}</td>
                   <td class="whitespace-nowrap">{{ $row->penggunaan_air }} m&sup3;</td>
-                  <td class="whitespace-nowrap">{{ money($row->total_tagihan, 'IDR') }}</td>
+                  <td class="whitespace-nowrap">{{ Money::IDR($row->total_tagihan)->formatWithoutZeroes() }}</td>
                   <td class="whitespace-nowrap ">
                     <span
                       class="inline-block px-1.5 text-sm gap-1 border w-fit mx-auto rounded {{ $row->status_pembayaran == 'paid' ? 'border-green-300 bg-green-100 text-green-700' : 'border-yellow-300 bg-yellow-100 text-yellow-700' }}">
@@ -112,14 +122,28 @@
                   </td>
                   <td class="whitespace-nowrap">
                     <div class="flex gap-1">
+                      @if ($row->status_pembayaran == 'unpaid')
                       <x-button class="bg-green-500 px-2 py-1 text-sm rounded gap-1 hover:bg-hover"
                       @click="modalBayar=true;modalBayarItem={id: {{ $row->id }}, total: '{{ money($row->total_tagihan, 'IDR')}}', pelanggan: '{{ $row->pelanggan->nama }} ({{ $row->pelanggan->no_pelanggan }})' }"
                       >
                         <x-feathericon-check-circle class="h-4 w-4" />
-                        Konfirmasi</x-button>
-                      <a href="{{ route('tagihan.create', $row->id) }}" target="_blank"
+                        Konfirmasi
+                      </x-button>
+                      @else
+                      <x-button class="bg-gray-300 px-2 py-1 text-sm rounded gap-1 cursor-not-allowed text-gray-400 hover:bg-gray-300"
+                      >
+                        <x-feathericon-check-circle class="h-4 w-4" />
+                        Konfirmasi
+                      </x-button>
+                      @endif
+                      {{-- <a href="{{ route('tagihan.create', $row->id) }}" target="_blank"
                         class="ms-1 inline-flex items-center bg-blue-500 rounded p-2 text-sm text-white hover:bg-hover">
-                        <x-feathericon-eye class="h-4 w-4" /></a>
+                        <x-feathericon-eye class="h-4 w-4" /></a> --}}
+                        <a href="{{ route('tagihan.cetak_kwitansi_satuan', $row->id) }}" target="_blank"
+                          class="ms-1 inline-flex items-center bg-blue-500 rounded p-2 text-sm text-white hover:bg-hover">
+                          <x-feathericon-printer class="size-4" />
+                        </a>
+                          
                     </div>
                   </td>
                 </tr>
@@ -133,6 +157,9 @@
 
             </tbody>
           </table>
+          <div class="mt-4 mx-2">
+            {{ $tagihan->withQueryString()->links() }}
+          </div>
 
         </div>
       @else

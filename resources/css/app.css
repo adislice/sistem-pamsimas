@@ -163,4 +163,7 @@
     .dropdown-invert .dropdown {
         @apply bottom-0;
     }
+    .row {
+        @apply flex flex-row;
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pelanggan;
 use App\Models\PencatatanMeteran;
 use App\Models\TagihanPembayaran;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -33,7 +34,7 @@ class TagihanPembayaranController extends Controller
         ->whereRelation('pelanggan', 'rt', '=', $rt)
         ->whereRelation('pelanggan', 'rw', '=', $rw)
         ->where('bulan', $bulan)->where('tahun', $tahun)
-        ->get();
+        ->paginate(20);
 
         return view('pages.tagihan_pembayaran.index', [
             'select_rt' => $select_rt,
@@ -98,7 +99,7 @@ class TagihanPembayaranController extends Controller
         ]);
 
         // dummy
-        $tarifPerMeter = 5000;
+        $tarifPerMeter = 2000;
         $batasBayar = Carbon::now()->addDays(7)->format('Y-m-d');
 
         $listPemakaian = PencatatanMeteran::from('pencatatan_meteran as m1')
@@ -125,15 +126,32 @@ class TagihanPembayaranController extends Controller
 
         foreach ($listPemakaian as $pemakaian) {
             $totalTagihan = $pemakaian->jumlah_pemakaian * $tarifPerMeter;
-            TagihanPembayaran::create([
-                'pelanggan_id' => $pemakaian->pelanggan_id,
-                'bulan' => $request->bulan,
-                'tahun' => $request->tahun,
-                'penggunaan_air' => $pemakaian->jumlah_pemakaian,
-                'tarif_permeter' => $tarifPerMeter,
-                'total_tagihan' => $totalTagihan,
-                'tgl_batas_bayar' => $batasBayar
-            ]);
+            try {
+                TagihanPembayaran::create([
+                    'pelanggan_id' => $pemakaian->pelanggan_id,
+                    'bulan' => $request->bulan,
+                    'tahun' => $request->tahun,
+                    'penggunaan_air' => $pemakaian->jumlah_pemakaian,
+                    'tarif_permeter' => $tarifPerMeter,
+                    'total_tagihan' => $totalTagihan,
+                    'tgl_batas_bayar' => $batasBayar
+                ]);
+            } catch (QueryException $e) {
+                if ($e->errorInfo[1] == 1062) {
+                    $tagihan = TagihanPembayaran::where('bulan', $request->bulan)
+                        ->where('tahun', $request->tahun)
+                        ->where('pelanggan_id', $pemakaian->pelanggan_id)
+                        ->first();
+                    $tagihan->update([
+                        'penggunaan_air' => $pemakaian->jumlah_pemakaian,
+                        'tarif_permeter' => $tarifPerMeter,
+                        'total_tagihan' => $totalTagihan,
+                        'tgl_batas_bayar' => $batasBayar
+                    ]);
+                } else {
+                    throw $e;
+                }
+            }
         }
 
     }
@@ -149,5 +167,35 @@ class TagihanPembayaranController extends Controller
         ]);
 
         return redirect()->back()->with('toast-success', 'Tagihan pembayaran berhasil dikonfirmasi');
+    }
+
+    public function cetakKwitansiSemua(Request $request) {
+        $rt = request('rt');
+        $rw = request('rw');
+        $bulan = request('bulan');
+        $tahun = request('tahun');
+
+        $list_tagihan = TagihanPembayaran::with(['pelanggan'])
+        ->whereRelation('pelanggan', 'rt', '=', $rt)
+        ->whereRelation('pelanggan', 'rw', '=', $rw)
+        ->where('bulan', $bulan)->where('tahun', $tahun)
+        ->get();
+
+        $pdf = Pdf::loadView('pdf.kwitansi', compact('list_tagihan'));
+        // $pdf->set_paper(array(0, 0, 595.27, 234), 'portrait');
+        $pdf->setPaper('A4');
+
+        return $pdf->stream('Kwitansi.pdf');
+    }
+
+    public function cetakKwitansiSatu(Request $request, $id) {
+        $list_tagihan = TagihanPembayaran::with(['pelanggan'])
+            ->where('id', $id)
+            ->get();
+
+        $pdf = Pdf::loadView('pdf.kwitansi', compact('list_tagihan'));
+        $pdf->setPaper('A4');
+
+        return $pdf->stream("Kwitansi.pdf");
     }
 }

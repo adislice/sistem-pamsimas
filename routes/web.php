@@ -43,6 +43,8 @@ Route::middleware('auth:petugas')->group(function() {
     Route::get('tagihan', [TagihanPembayaranController::class, 'index'])->name('tagihan.index');
     Route::get('tagihan/create/{id_meteran}', [TagihanPembayaranController::class, 'create'])->name('tagihan.create');
     Route::post('tagihan/konfirmasi', [TagihanPembayaranController::class, 'confirmPayment'])->name('tagihan.konfirmasi');
+    Route::get('tagihan/cetak-kwitansi', [TagihanPembayaranController::class, 'cetakKwitansiSemua'])->name('tagihan.cetak_kwitansi');
+    Route::get('tagihan/cetak-kwitansi/{id}', [TagihanPembayaranController::class, 'cetakKwitansiSatu'])->name('tagihan.cetak_kwitansi_satuan');
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     

@@ -100,7 +100,9 @@
     <div class="w-full max-w-96 mx-auto py-4">
       <form action="{{ route('pencatatan_meteran.catat_action', $pelanggan->id) }}" method="post" onchange="window.onbeforeunload = () => '';"
         @if($is_sudah_dicatat)
-        onSubmit="return confirm('Meteran pelanggan {{ $pelanggan->no_pelanggan}} sudah dicatat sebelumnya. Apakah Anda yakin ingin memperbarui data meteran?') "
+        onsubmit="return confirm('Meteran pelanggan {{ $pelanggan->no_pelanggan}} sudah dicatat sebelumnya. Apakah Anda yakin ingin memperbarui data meteran?') "
+        @else
+        onsubmit="window.onbeforeunload = null; return true;"
         @endif
         >
         @csrf

@@ -7,12 +7,13 @@ module.exports = {
     "./resources/**/*.js",
     "./resources/**/*.vue",
     // "./node_modules/flowbite/**/*.js"
+    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
   ],
   darkMode: 'selector',
   theme: {
     extend: {
       colors: {
-        primary: colors.sky,
+        primary: colors.blue,
         secondary: colors.yellow,
         neutral: colors.gray,
       }
