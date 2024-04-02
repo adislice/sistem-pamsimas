@@ -19,16 +19,19 @@ class TagihanPembayaranController extends Controller
         $select_rw = Pelanggan::select(['rw'])->distinct()->orderBy('rw')->get();
 
         if (!$request->bulan && !$request->tahun && !$request->rt && !$request->rw) {
-            return view('pages.tagihan_pembayaran.index', [
-                'select_rt' => $select_rt,
-                'select_rw' => $select_rw,
-            ]);
+            $rt = $select_rt->first()->rt;
+            $rw = $select_rw->first()->rw;
+            $bulan = date('m');
+            $tahun = date('Y');
+            return redirect()->route('tagihan.index', ['rt' => $rt, 'rw' => $rw, 'bulan' => $bulan, 'tahun' => $tahun]);
+        } else {
+            $rt = $request->rt;
+            $rw = $request->rw;
+            $tahun = $request->tahun;
+            $bulan = $request->bulan;
         }
 
-        $rt = $request->rt;
-        $rw = $request->rw;
-        $tahun = $request->tahun;
-        $bulan = $request->bulan;
+        
         
         $tagihan = TagihanPembayaran::with(['pelanggan'])
         ->whereRelation('pelanggan', 'rt', '=', $rt)

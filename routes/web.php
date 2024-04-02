@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\PelangganController;
 use App\Http\Controllers\Web\PemakaianAirController;
+use App\Http\Controllers\Web\PemasukanController;
 use App\Http\Controllers\Web\PencatatanMeteranController;
 use App\Http\Controllers\Web\TagihanPembayaranController;
 use App\Models\Pelanggan;
@@ -45,7 +46,8 @@ Route::middleware('auth:petugas')->group(function() {
     Route::post('tagihan/konfirmasi', [TagihanPembayaranController::class, 'confirmPayment'])->name('tagihan.konfirmasi');
     Route::get('tagihan/cetak-kwitansi', [TagihanPembayaranController::class, 'cetakKwitansiSemua'])->name('tagihan.cetak_kwitansi');
     Route::get('tagihan/cetak-kwitansi/{id}', [TagihanPembayaranController::class, 'cetakKwitansiSatu'])->name('tagihan.cetak_kwitansi_satuan');
-
+    
+    Route::resource('pemasukan', PemasukanController::class);
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     
 

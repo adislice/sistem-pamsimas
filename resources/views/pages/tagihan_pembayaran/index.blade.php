@@ -65,28 +65,9 @@
       </form>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm py-4 mt-2">
-      <div class="hidden flex mb-4 gap-1 items-center">
-        <div class=" gap-1 items-center ms-auto">
-          <x-outlined-button size="sm" square="true" class="border-blue-600 text-blue-600 hover:bg-blue-600">
-            <span class="mdi text-lg">upload</span>
-          </x-outlined-button>
-          <x-outlined-button size="sm" square="true" class="border-green-600 text-green-600 hover:bg-green-600">
-            <span class="mdi text-lg">description</span>
-          </x-outlined-button>
-          <x-outlined-button size="sm" square="true" class="border-violet-600 text-violet-600 hover:bg-violet-600">
-            <span class="mdi text-lg">print</span>
-          </x-outlined-button>
-          <x-outlined-button size="sm" square="true" class="border-red-700 text-red-700 hover:bg-red-700">
-            <span class="mdi text-lg">delete</span>
-          </x-outlined-button>
-        </div>
-      </div>
-      
-      
-
+    <div class="bg-white rounded-lg shadow-sm p-3 mt-2">
       @if (isset($tagihan))
-      <div class="mx-4 mb-4">
+      <div class="mb-3">
         <x-button href="{!! route('tagihan.cetak_kwitansi') . '?' . request()->getQueryString()  !!}" target="_blank" class="rounded bg-blue-500 hover:bg-hover gap-1" >
           <x-feathericon-printer class="size-4" />
           Cetak Kwitansi (Semua)</x-button>
@@ -95,7 +76,7 @@
           <table class="table">
             <thead>
               <tr>
-                {{-- <th><input type="checkbox" id="select_all"></th> --}}
+                <th class="whitespace-nowrap">No.</th>
                 <th class="whitespace-nowrap">Bulan / Tahun</th>
                 <th class="whitespace-nowrap">Nama</th>
                 <th class="whitespace-nowrap">No. Pelanggan</th>
@@ -108,7 +89,7 @@
             <tbody>
               @foreach ($tagihan as $row)
                 <tr class="last:dropdown-invert">
-                  {{-- <td><input type="checkbox" name="selected_id[]" value="{{ $row->pelanggan_id }}"></td> --}}
+                  <td class="whitespace-nowrap">{{ $tagihan->firstItem() + $loop->index }}</td>
                   <td class="whitespace-nowrap">{{ $row->bulan }} / {{ $row->tahun }}</td>
                   <td class="whitespace-nowrap text-ellipsis overflow-hidden max-w-48">{{ $row->pelanggan->nama }}</td>
                   <td class="whitespace-nowrap">{{ $row->pelanggan->no_pelanggan }}</td>

@@ -75,15 +75,11 @@
                   class="inline-flex items-center rounded hover:underline font-medium text-sm p-2 gap-1 bg-blue-500 text-white"
                   title="Lihat">
                   <x-feathericon-eye class="h-4 w-4" />
-
-
                 </a>
                 <a href="{{ route('pelanggan.edit', $item->id) }}"
                   class="inline-flex items-center hover:underline font-medium text-sm p-2 rounded gap-1 bg-yellow-500 text-white"
                   title="Edit">
                   <x-feathericon-edit class="h-4 w-4" />
-
-
                 </a>
                 <button
                   class="inline-flex items-center hover:underline font-medium text-sm p-2 rounded gap-1 bg-red-600 text-white"
