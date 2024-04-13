@@ -4,16 +4,13 @@
   :class="{ 'expanded': !$store.sidebar.isCollapsed, '-translate-x-full': !$store.sidebar_mobile.isOpened }"
   x-transition x-cloak>
   <div class="w-full flex items-center sjustify-center h-14 px-2 overflow-x-hidden">
-    <button class="hidden md:flex hover:bg-slate-700 shrink-0 size-12 items-center justify-center rounded-lg"
-      x-data="" @click="$store.sidebar.toggle()">
-      <x-feathericon-menu class="h-5 w-5" />
-    </button>
+    
     <button class="flex md:hidden hover:bg-slate-700 shrink-0 size-12 items-center justify-center rounded-lg"
       x-data="" @click="$store.sidebar_mobile.toggle()">
       <x-feathericon-menu class="h-5 w-5" />
     </button>
 
-    <div class="font-bold shrink-0" x-show="!$store.sidebar.isCollapsed" x-transition>PAMSIMAS Tirta Amerta</div>
+    <h2 class="font-bold shrink-0 text-center md:mx-auto" x-show="!$store.sidebar.isCollapsed" x-transition>PAMSIMAS Tirta Amerta</h2>
   </div>
   <ul class="my-2 mx-2 flex flex-col gap-y-2">
     <li>

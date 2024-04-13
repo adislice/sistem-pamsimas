@@ -1,4 +1,11 @@
-<nav class="bg-white z-50 h-14 px-2 md:px-4 flex items-center sticky top-0 shadow-sm border">
+<nav class="bg-white z-50 h-14 px-2 flex items-center sticky top-0 shadow-sm border">
+  <button class="hidden md:flex hover:bg-hover shrink-0 size-10 items-center justify-center rounded-lg"
+      x-data="" @click="$store.sidebar.toggle()">
+      <x-feathericon-menu class="h-5 w-5" />
+    </button>
+    <button x-data="" @click="$store.sidebar_mobile.toggle()" class="p-3 md:hidden">
+      <x-feathericon-menu class="h-5 w-5" />
+    </button>
   @isset($back)
   <a href="{{ $back }}" class="p-2 hover:bg-gray-100 flex gap-2 rounded me-2 focus:text-blue-500" title="Kembali">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -22,7 +29,7 @@
     </div>
     <div x-data="{ open: false }" class="inline-flex relative">
       <button @click="open = ! open"
-        class="px-4 pe-10 py-2 h-10 flex items-center justify-center hover:bg-gray-100 rounded">
+        class="px-4 pe-10 py-2 h-10 flex items-center justify-center hover:bg-hover rounded">
         <span class="select-none absolute inset-y-0 right-0 flex items-center cursor-pointer pr-3">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-4 h-4">
@@ -39,8 +46,6 @@
       </div>
       
     </div>
-    <button x-data="" @click="$store.sidebar_mobile.toggle()" class="p-3 md:hidden">
-      <x-feathericon-menu class="h-5 w-5" />
-    </button>
+    
   </div>
 </nav>

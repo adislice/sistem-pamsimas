@@ -31,7 +31,7 @@
   {{-- Sidebar --}}
   @include('template.sidebar')
 
-  <main class="grow relative overflow-y-auto transition-all duration-500" x-data="" x-cloak :class="{'translate-x-14': $store.sidebar_mobile.isOpened}">
+  <main class="grow relative overflow-y-auto transition-all duration-500" x-data="" x-cloak >
     <div class="absolute right-0 top-0 left-0 bottom-0  w-full h-full z-[100] bg-black/40" x-data="" x-show="$store.sidebar_mobile.isOpened"  x-transition.opacity></div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
