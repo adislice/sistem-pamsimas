@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\PelangganController;
 use App\Http\Controllers\Web\PemakaianAirController;
 use App\Http\Controllers\Web\PemasukanController;
 use App\Http\Controllers\Web\PencatatanMeteranController;
+use App\Http\Controllers\Web\PengeluaranController;
 use App\Http\Controllers\Web\TagihanPembayaranController;
 use App\Models\Pelanggan;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +49,7 @@ Route::middleware('auth:petugas')->group(function() {
     Route::get('tagihan/cetak-kwitansi/{id}', [TagihanPembayaranController::class, 'cetakKwitansiSatu'])->name('tagihan.cetak_kwitansi_satuan');
     
     Route::resource('pemasukan', PemasukanController::class);
+    Route::resource('pengeluaran', PengeluaranController::class);
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     
 
