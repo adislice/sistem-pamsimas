@@ -12,7 +12,7 @@
 
     <h2 class="font-bold shrink-0 text-center md:mx-auto" x-show="!$store.sidebar.isCollapsed" x-transition>PAMSIMAS Tirta Amerta</h2>
   </div>
-  <ul class="my-2 mx-2 flex flex-col gap-y-2">
+  <ul class="my-2 mx-2 flex flex-col gap-y-1">
     <li>
       <a href="/"
         class="flex items-center h-12 hover:bg-slate-700 rounded-lg {{ Request::is('/') ? 'nav-active' : '' }}">
