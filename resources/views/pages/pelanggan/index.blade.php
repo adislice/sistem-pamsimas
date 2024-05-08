@@ -5,9 +5,10 @@
   <div class="bg-white rounded-lg shadow-sm p-5">
     <div class="flex mb-4 gap-1 items-center">
 
-      <x-button href="{{ route('pelanggan.create') }}" size="sm" class="rounded">
-        {{-- <span class="mdi me-1 text-base">add_circle</span> --}}
-        <x-feathericon-plus class="h-4 w-4 me-1" />
+      <x-button href="{{ route('pelanggan.create') }}" size="sm" class="rounded bg-blue-600 hover:bg-hover">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5 me-1" viewBox="0 -960 960 960" fill="currentcolor">
+          <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+        </svg>
         Tambah
       </x-button>
       <div class="flex gap-1 items-center ms-auto">
