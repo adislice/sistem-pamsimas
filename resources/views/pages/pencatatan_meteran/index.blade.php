@@ -9,9 +9,18 @@
         <label for="bulan"
           class="bg-gray-50 border border-gray-300 border-r-0 px-3 rounded-s flex items-center font-medium">Bulan</label>
         <x-input-select id="bulan" placeholder="123" class="rounded-e rounded-s-none border-s-0" name="bulan">
-          <option value="1">Januari</option>
-          <option value="2">Februari</option>
-          <option value="3">Maret</option>
+          <option value="1" {{ request('bulan') == 1 ? 'selected' : '' }}>Januari</option>
+            <option value="2" {{ request('bulan') == 2 ? 'selected' : '' }}>Februari</option>
+            <option value="3" {{ request('bulan') == 3 ? 'selected' : '' }}>Maret</option>
+            <option value="4" {{ request('bulan') == 4 ? 'selected' : '' }}>April</option>
+            <option value="5" {{ request('bulan') == 5 ? 'selected' : '' }}>Mei</option>
+            <option value="6" {{ request('bulan') == 6 ? 'selected' : '' }}>Juni</option>
+            <option value="7" {{ request('bulan') == 7 ? 'selected' : '' }}>Juli</option>
+            <option value="8" {{ request('bulan') == 8 ? 'selected' : '' }}>Agustus</option>
+            <option value="9" {{ request('bulan') == 9 ? 'selected' : '' }}>September</option>
+            <option value="10" {{ request('bulan') == 10 ? 'selected' : '' }}>Oktober</option>
+            <option value="11" {{ request('bulan') == 11 ? 'selected' : '' }}>November</option>
+            <option value="12" {{ request('bulan') == 12 ? 'selected' : '' }}>Desember</option>
         </x-input-select>
       </div>
       <div class="flex w-full lg:w-72">
@@ -75,23 +84,32 @@
             <tr>
               <th>No. Pelanggan</th>
               <th>Nama Pelanggan</th>
-              <th>Tgl. Dicatat</th>
-              <th></th>
+              <th>Catat Angka Meteran</th>
+              {{-- <th></th> --}}
             </tr>
           </thead>
           <tbody>
             @foreach ($list_pelanggan as $row)
-              <tr>
+              <tr id="row_id_{{ $row->id }}">
                 <td class="whitespace-nowrap">{{ $row->no_pelanggan }}</td>
                 <td class="whitespace-nowrap">{{ $row->nama }}</td>
                 <td class="whitespace-nowrap text-sm">
-                  @if ($row->created_at != null)
-                    {{ $row->created_at->format('d/m/Y') }}
-                  @else
-                    Belum dicatat
-                  @endif
+                  <form action="{{ route('pencatatan_meteran.catat_action', $row->id) }}" method="post" class="flex gap-1">
+                    @csrf
+                  <x-input-text name="angka_meteran" class="w-28 mt-0 p-1 px-2 text-sm" value="{{ $row->angka_meteran }}" required/>
+                    <input type="hidden" name="bulan" value="{{ request()->get('bulan') }}" required>
+                    <input type="hidden" name="tahun" value="{{ request()->get('tahun') }}" required>
+                    <x-button class="rounded px-2 w-24 hover:bg-hover {{ $row->created_at != null ? 'bg-green-500' : '' }}" type="submit">
+                      @if ($row->created_at == null)
+                        <x-feathericon-check class="size-4 me-1" /> Catat
+                      @else 
+                        <x-feathericon-edit class="size-4 me-1" /> Update
+                      
+                      @endif
+                    </x-button>
+                  </form>
                 </td>
-                <td class="whitespace-nowrap">
+                {{-- <td class="whitespace-nowrap">
                   <div class="flex gap-1">
                     <a href="{{ route('pencatatan_meteran.catat', $row->id) . '?' . request()->getQueryString() }}"
                       target="_blank"
@@ -114,7 +132,7 @@
 
                   </div>
 
-                </td>
+                </td> --}}
               </tr>
             @endforeach
 

@@ -119,14 +119,14 @@ class PencatatanMeteranController extends Controller
             'angka_meteran' => 'required',
             'bulan' => 'required',
             'tahun' => 'required',
-            'foto' => 'required'
+            // 'foto' => 'required'
         ]);
 
-        $image = $request->foto;
-        $imageData = str_replace('data:image/png;base64,', '', $image);
-        $fileName = uniqid() . '.png';
-        $filePath = 'meteran/' . $fileName;
-        $disk = Storage::disk('public')->put($filePath, base64_decode($imageData));
+        // $image = $request->foto;
+        // $imageData = str_replace('data:image/png;base64,', '', $image);
+        // $fileName = uniqid() . '.png';
+        // $filePath = 'meteran/' . $fileName;
+        // $disk = Storage::disk('public')->put($filePath, base64_decode($imageData));
 
         try {
             PencatatanMeteran::create([
@@ -135,12 +135,12 @@ class PencatatanMeteranController extends Controller
                 'bulan' => $request->bulan,
                 'tahun' => $request->tahun,
                 'petugas_id' => auth()->user()->id,
-                'foto' => $filePath
+                // 'foto' => $filePath
             ]);
 
             return redirect()->back()->with([
-                'alert-success' => 'Meteran dengan nomor pelanggan ' . $pelanggan->no_pelanggan . ' berhasil dicatat'
-            ]);
+                'toast-success' => 'Berhasil mencatat meteran ' . $pelanggan->no_pelanggan . ''
+            ])->withFragment('row_id_' . $pelanggan->id);
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) { // key sudah ada, lanjut update
                 $update = PencatatanMeteran::where('pelanggan_id', $pelanggan->id)
@@ -150,13 +150,13 @@ class PencatatanMeteranController extends Controller
                 $oldImage = $update->foto;
                 $update->update([
                     'angka_meteran' => $request->angka_meteran,
-                    'foto' => $filePath
+                    // 'foto' => $filePath
                 ]);
 
-                Storage::disk('public')->delete($oldImage);
+                // Storage::disk('public')->delete($oldImage);
                 return redirect()->back()->with([
-                    'alert-success' => 'Meteran dengan nomor pelanggan ' . $pelanggan->no_pelanggan . ' berhasil diperbarui'
-                ]);
+                    'toast-success' => 'Berhasil mencatat meteran ' . $pelanggan->no_pelanggan . ''
+                ])->withFragment('row_id_' . $pelanggan->id);
             } else {
                 throw $e;
             }

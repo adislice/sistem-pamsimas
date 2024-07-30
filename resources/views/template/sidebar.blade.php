@@ -108,6 +108,17 @@
       </a>
     </li>
 
+    <li>
+      <a href="{{ route('laporan.index') }}"
+        class="flex items-center h-12 hover:bg-slate-700 rounded-lg {{ Request::is('laporan*') ? 'nav-active' : '' }}">
+        <div class="h-12 w-12 grid place-items-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-6" viewBox="0 -960 960 960" fill="currentcolor"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>  
+        </div>
+        <span class="nav-title shrink-0" x-data="" x-show="!$store.sidebar.isCollapsed"
+          x-transition>Laporan</span>
+      </a>
+    </li>
+
   </ul>
 
 </aside>

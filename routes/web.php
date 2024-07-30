@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\LaporanController;
 use App\Http\Controllers\Web\PelangganController;
 use App\Http\Controllers\Web\PemakaianAirController;
 use App\Http\Controllers\Web\PemasukanController;
@@ -50,6 +51,9 @@ Route::middleware('auth:petugas')->group(function() {
     
     Route::resource('pemasukan', PemasukanController::class);
     Route::resource('pengeluaran', PengeluaranController::class);
+
+    Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('laporan/pemakaian-air', [LaporanController::class, 'cetakPemakaianAir'])->name('laporan.pemakaian_air');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     
 

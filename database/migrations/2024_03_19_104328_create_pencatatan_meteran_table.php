@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('bulan');
             $table->integer('tahun');
             $table->integer('angka_meteran');
-            $table->string('foto');
+            // $table->string('foto');
             $table->unique(['bulan', 'tahun', 'pelanggan_id']);
             $table->foreign('pelanggan_id')->references('id')->on('pelanggan')->onUpdate('cascade')->onDelete('restrict');
             $table->foreign('petugas_id')->references('id')->on('petugas')->onUpdate('cascade')->onDelete('restrict');

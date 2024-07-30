@@ -137,7 +137,7 @@
             </tr>
             <tr>
               <td style="width: 200px"><strong>Pemakaian Air</strong></td>
-              <td>{{ $tagihan->penggunaan_air }} m&sup3; @ {{ Money::IDR($tagihan->tarif_permeter)->formatWithoutZeroes() }}/m&sup3;</td>
+              <td>{{ $tagihan->jumlah_pemakaian }} m&sup3; @ {{ Money::IDR($tagihan->tarif_permeter)->formatWithoutZeroes() }}/m&sup3;</td>
             </tr>
           </table>
     

@@ -78,10 +78,14 @@ class TagihanPembayaranController extends Controller
                 'pelanggan_id' => $meteran->pelanggan_id,
                 'bulan' => $meteran->bulan,
                 'tahun' => $meteran->tahun,
-                'penggunaan_air' => $penggunaanAir,
+                'jumlah_pemakaian' => $penggunaanAir,
                 'tarif_permeter' => $tarifPerMeter3,
                 'total_tagihan' => $totalTagihan,
                 'tgl_batas_bayar' => $batasBayar
+            ]);
+
+            return redirect()->back()->with([
+                'toast-success' => 'Berhasil menerbitkan tagihan pelanggan ' . $meteran->pelanggan->no_pelanggan
             ]);
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
@@ -134,7 +138,7 @@ class TagihanPembayaranController extends Controller
                     'pelanggan_id' => $pemakaian->pelanggan_id,
                     'bulan' => $request->bulan,
                     'tahun' => $request->tahun,
-                    'penggunaan_air' => $pemakaian->jumlah_pemakaian,
+                    'jumlah_pemakaian' => $pemakaian->jumlah_pemakaian,
                     'tarif_permeter' => $tarifPerMeter,
                     'total_tagihan' => $totalTagihan,
                     'tgl_batas_bayar' => $batasBayar
@@ -146,7 +150,7 @@ class TagihanPembayaranController extends Controller
                         ->where('pelanggan_id', $pemakaian->pelanggan_id)
                         ->first();
                     $tagihan->update([
-                        'penggunaan_air' => $pemakaian->jumlah_pemakaian,
+                        'jumlah_pemakaian' => $pemakaian->jumlah_pemakaian,
                         'tarif_permeter' => $tarifPerMeter,
                         'total_tagihan' => $totalTagihan,
                         'tgl_batas_bayar' => $batasBayar
@@ -156,6 +160,10 @@ class TagihanPembayaranController extends Controller
                 }
             }
         }
+
+        return redirect()->back()->with([
+            'toast-success' => 'Berhasil menerbitkan tagihan untuk '. $listPemakaian->count() .' pelanggan '
+        ]);
 
     }
 
