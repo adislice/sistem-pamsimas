@@ -5,7 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Pelanggan;
+use App\Models\PencatatanMeteran;
 use App\Models\Petugas;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Testing\Fakes\Fake;
@@ -18,13 +21,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-        for ($i = 0; $i < 50; $i++) {
+        $max_pel = 100;
+        for ($i = 0; $i < $max_pel; $i++) {
             Pelanggan::create([
                 'nama' => fake()->name,
                 'no_pelanggan' => fake()->unique()->numerify('##########'),
@@ -40,9 +38,40 @@ class DatabaseSeeder extends Seeder
         }
 
         Petugas::create([
-            'nama' => fake()->name,
+            'nama' => "Cecilia Amanda",
             'username' => 'admin',
-            'password' => Hash::make('admin')
+            'password' => Hash::make('admin123')
         ]);
+
+        $startDate = Carbon::create(2024, 1, 1);
+        $today = Carbon::now()->subDays(1);
+        $angka_meteran = 0;
+        while($startDate->lessThanOrEqualTo($today)) {
+            $lastDay = $startDate->copy()->endOfMonth();
+            print($angka_meteran . " ");
+
+            $id_pel = 1;
+
+            while($id_pel <= $max_pel) {
+                if ($angka_meteran == 0) {
+                    $anf = 0;
+                } else {
+                    $anf = $angka_meteran + rand(1, 2);
+                }
+
+                PencatatanMeteran::create([
+                    'pelanggan_id' => $id_pel,
+                    'petugas_id' => 1,
+                    'bulan' => $lastDay->month,
+                    'tahun' => $lastDay->year,
+                    'angka_meteran' => $anf
+                ]);
+
+                $id_pel++;
+            }
+
+            $startDate->addMonth();
+            $angka_meteran = $angka_meteran + 5;
+        }
     }
 }

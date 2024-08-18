@@ -29,6 +29,7 @@
 <body>
   <h4>LAPORAN PEMAKAIAN AIR</h4>
   <h5>RT. {{ $info->rt }} / RW. {{ $info->rw }}</h5>
+  <h5>Tahun {{ $info->tahun }}</h5>
 
   <table>
     

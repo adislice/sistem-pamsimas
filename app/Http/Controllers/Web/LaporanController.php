@@ -59,10 +59,11 @@ class LaporanController extends Controller
 
                 
         }
-        $info = (object) array(['rt' => $rt, 'rw' => $rw, 'bulan' => $bulan ]);
+        $info = (object) ['rt' => $rt, 'rw' => $rw, 'tahun' => $tahun ];
+        
         $pdf = Pdf::loadView('pdf.laporan_pemakaian_air', [
             'list_pemakaian' => $list_pemakaian,
-            'info' =>$info
+            'info' => $info
         ]);
         $pdf->setPaper('A4', 'landscape');
         
